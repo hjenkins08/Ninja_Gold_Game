@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ninja Gold</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="main_content">
+            <header>
+                <h1>Ninja Gold</h1>
+                <a href="/reset"><button type="submit" class="btn btn-outline-dark">Reset</button></a>
+            </header>
+            <h3>Your Gold: <input type="text" disabled value="{{request.session.gold}}"></h3>
+            <div id="buildings">
+                <div>
+                    <h1>Treasure Hunt</h1>
+                    <p>(earns 20-30 gold)</p>
+                    <form action="/gold" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="building" value="treasure hunt">
+                        <button type="submit" class="btn btn-outline-dark">Find gold!</button>
+                    </form>
+            </div>
+            <div>
+                <h1>On the sidewalk</h1>
+                <p>(earns 5-10 gold)</p>
+                <form action="/gold" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="building" value="on the sidewalk">
+                    <button type="submit" class="btn btn-outline-dark">Find gold!</button>
+                </form>
+            </div>
+            <div>
+                <h1>House</h1>
+                <p>(earns 10-15 gold)</p>
+                <form action="/gold" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="building" value="house">
+                    <button type="submit" class="btn btn-outline-dark">Find gold!</button>
+                </form>
+            </div>
+            <div>
+                <h1>Casino</h1>
+                <p>(earns/takes 0-200 gold)</p>
+                <form action="/gold" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="building" value="casino">
+                    <button type="submit" class="btn btn-outline-dark">Find gold!</button>
+                </form>
+        </div>
+    </div>
+    <h2>Activities</h2>
+    <div id="activities">
+    {% for activity in request.session.activities reversed %}
+        <p class="{{ activity.result}}">{{ activity.message }}</p>
+    {% endfor %}
+    </div>
+</body>
+</html>
